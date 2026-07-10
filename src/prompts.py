@@ -15,11 +15,11 @@ Rules:
 
 Output format:
 
-{
+{{
     "termination_clause": "...",
     "confidentiality_clause": "...",
     "liability_clause": "..."
-}
+}}
 
 Contract:
 
