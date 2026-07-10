@@ -4,6 +4,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 import json
+import time
 
 from config.settings import CONTRACTS_JSON, OUTPUT_DIR
 from gemini_client import generate_response
@@ -18,16 +19,19 @@ def load_contracts():
 def extract_clauses(contract_text):
     prompt = CLAUSE_EXTRACTION_PROMPT.format(contract=contract_text)
 
-    response = generate_response(prompt)
+    for attempt in range(3):
+        try:
+            response = generate_response(prompt)
+            return json.loads(response)
+        except Exception as e:
+            print(f"Attempt {attempt + 1} failed: {e}")
+            time.sleep(10)
 
-    try:
-        return json.loads(response)
-    except:
-        return {
-            "termination_clause": "Error",
-            "confidentiality_clause": "Error",
-            "liability_clause": "Error"
-        }
+    return {
+        "termination_clause": "Not Found",
+        "confidentiality_clause": "Not Found",
+        "liability_clause": "Not Found"
+    }
 
 
 def main():
@@ -35,23 +39,28 @@ def main():
 
     results = []
 
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
     for i, contract in enumerate(contracts, start=1):
-        print(f"[{i}/{len(contracts)}] {contract['filename']}")
+        print(f"[{i}/{len(contracts)}] Processing: {contract['filename']}")
 
         clauses = extract_clauses(contract["text"])
 
         results.append({
             "contract_id": contract["contract_id"],
             "filename": contract["filename"],
-            **clauses
+            "termination_clause": clauses.get("termination_clause", "Not Found"),
+            "confidentiality_clause": clauses.get("confidentiality_clause", "Not Found"),
+            "liability_clause": clauses.get("liability_clause", "Not Found")
         })
 
-    OUTPUT_DIR.mkdir(exist_ok=True)
+        with open(OUTPUT_DIR / "clauses.json", "w", encoding="utf-8") as f:
+            json.dump(results, f, indent=2, ensure_ascii=False)
 
-    with open(OUTPUT_DIR / "clauses.json", "w", encoding="utf-8") as f:
-        json.dump(results, f, indent=2, ensure_ascii=False)
+        time.sleep(5)
 
-    print("\nSaved to outputs/clauses.json")
+    print("\nClause extraction completed.")
+    print(f"Results saved to {OUTPUT_DIR / 'clauses.json'}")
 
 
 if __name__ == "__main__":
