@@ -12,5 +12,4 @@ OUTPUT_DIR = BASE_DIR / "outputs"
 CONTRACTS_JSON = DATA_DIR / "contracts_subset.json"
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-
 MODEL_NAME = "gemini-2.5-flash"
