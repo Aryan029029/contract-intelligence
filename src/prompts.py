@@ -1,7 +1,7 @@
 CLAUSE_EXTRACTION_PROMPT = """
-You are an AI legal assistant.
+You are an expert legal AI assistant.
 
-Analyze the following legal contract and extract:
+Analyze the contract below and extract ONLY these clauses:
 
 1. Termination Clause
 2. Confidentiality Clause
@@ -9,11 +9,11 @@ Analyze the following legal contract and extract:
 
 Rules:
 - Return ONLY valid JSON.
-- If a clause is not present, return "Not Found".
-- Do not include markdown.
+- Do not use markdown.
 - Do not explain anything.
+- If a clause is missing, return "Not Found".
 
-Output format:
+Output:
 
 {{
     "termination_clause": "...",
@@ -28,14 +28,14 @@ Contract:
 
 
 SUMMARY_PROMPT = """
-You are an AI legal assistant.
+You are an expert legal AI assistant.
 
-Summarize the following contract in 100-150 words.
+Summarize the following legal contract in 100-150 words.
 
-Include:
+Your summary must include:
 - Purpose of the agreement
 - Key obligations of each party
-- Risks or penalties
+- Important risks, liabilities or penalties
 
 Return only the summary.
 

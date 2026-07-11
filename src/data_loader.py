@@ -10,7 +10,7 @@ import re
 
 RAW_PDF_DIR = Path("data/raw_pdfs")
 OUTPUT_PATH = Path("data/contracts_subset.json")
-MAX_CONTRACTS = 50
+MAX_CONTRACTS = 5
 
 
 def get_pdf_files(pdf_dir: Path):
