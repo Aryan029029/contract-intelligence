@@ -1,43 +1,29 @@
+import faiss
+import numpy as np
+
 from text_splitter import split_text
-
-KEYWORDS = {
-    "termination": [
-        "termination",
-        "terminate",
-        "terminated",
-        "expiry",
-        "expiration"
-    ],
-    "confidentiality": [
-        "confidential",
-        "confidentiality",
-        "non-disclosure",
-        "secret"
-    ],
-    "liability": [
-        "liability",
-        "liable",
-        "indemnify",
-        "indemnification",
-        "damages"
-    ]
-}
+from embeddings import embed_texts
 
 
-def retrieve_relevant_chunks(text, top_k=3):
+def retrieve_relevant_chunks(text, query, top_k=3):
     chunks = split_text(text)
 
-    scored = []
+    if len(chunks) == 0:
+        return []
 
-    for chunk in chunks:
-        score = 0
-        lower = chunk.lower()
+    embeddings = embed_texts(chunks).astype(np.float32)
 
-        for words in KEYWORDS.values():
-            score += sum(word in lower for word in words)
+    dimension = embeddings.shape[1]
 
-        scored.append((score, chunk))
+    index = faiss.IndexFlatIP(dimension)
 
-    scored.sort(key=lambda x: x[0], reverse=True)
+    index.add(embeddings)
 
-    return [chunk for score, chunk in scored[:top_k]]
+    query_embedding = embed_texts([query]).astype(np.float32)
+
+    _, indices = index.search(
+        query_embedding,
+        min(top_k, len(chunks))
+    )
+
+    return [chunks[i] for i in indices[0]]

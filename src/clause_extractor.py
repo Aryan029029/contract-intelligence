@@ -45,7 +45,7 @@ def extract_clauses(contract_text):
 
 
 def main():
-    contracts = load_contracts()
+    contracts = load_contracts()[:1]
 
     results = []
 
@@ -57,6 +57,12 @@ def main():
 
         relevant_chunks = retrieve_relevant_chunks(
             contract["text"],
+            query="""
+            Find the sections discussing:
+            - Termination Clause
+            - Confidentiality Clause
+            - Liability Clause
+            """,
             top_k=3
         )
 
@@ -77,7 +83,12 @@ def main():
             "w",
             encoding="utf-8"
         ) as f:
-            json.dump(results, f, indent=2, ensure_ascii=False)
+            json.dump(
+                results,
+                f,
+                indent=2,
+                ensure_ascii=False
+            )
 
     print("\nClause extraction completed.")
     print(f"Saved to {OUTPUT_DIR / 'clauses.json'}")
