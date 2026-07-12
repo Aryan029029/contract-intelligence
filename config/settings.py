@@ -11,6 +11,6 @@ OUTPUT_DIR = BASE_DIR / "outputs"
 
 CONTRACTS_JSON = DATA_DIR / "contracts_subset.json"
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-MODEL_NAME = "gemini-2.5-flash"
+MODEL_NAME = "llama-3.3-70b-versatile"

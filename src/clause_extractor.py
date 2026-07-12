@@ -9,7 +9,6 @@ import time
 from config.settings import CONTRACTS_JSON, OUTPUT_DIR
 from llm_client import generate_response
 from prompts import CLAUSE_EXTRACTION_PROMPT
-from retriever import retrieve_relevant_chunks
 
 
 def load_contracts():
@@ -35,7 +34,7 @@ def extract_clauses(contract_text):
 
         except Exception as e:
             print(f"Attempt {attempt + 1} failed: {e}")
-            time.sleep(2)
+            time.sleep(5)
 
     return {
         "termination_clause": "Not Found",
@@ -45,7 +44,7 @@ def extract_clauses(contract_text):
 
 
 def main():
-    contracts = load_contracts()[:1]
+    contracts = load_contracts()
 
     results = []
 
@@ -55,20 +54,7 @@ def main():
 
         print(f"[{i}/{len(contracts)}] Processing {contract['filename']}")
 
-        relevant_chunks = retrieve_relevant_chunks(
-            contract["text"],
-            query="""
-            Find the sections discussing:
-            - Termination Clause
-            - Confidentiality Clause
-            - Liability Clause
-            """,
-            top_k=3
-        )
-
-        combined_text = "\n\n".join(relevant_chunks)
-
-        clauses = extract_clauses(combined_text)
+        clauses = extract_clauses(contract["text"])
 
         results.append({
             "contract_id": contract["contract_id"],

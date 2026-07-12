@@ -43,3 +43,24 @@ Contract:
 
 {contract}
 """
+ANALYSIS_PROMPT = """You are a legal contract analysis assistant.
+
+Analyze the following contract and return your answer as a single valid JSON object
+with exactly these four keys: "summary", "termination_clause", "confidentiality_clause",
+and "liability_clause".
+
+- "summary": a concise 100-150 word summary covering the purpose of the agreement,
+  key obligations of each party, and notable risks or penalties.
+- "termination_clause": the termination conditions found in the contract, or
+  "Not found" if none exist.
+- "confidentiality_clause": the confidentiality clause found in the contract, or
+  "Not found" if none exist.
+- "liability_clause": the liability clause found in the contract, or
+  "Not found" if none exist.
+
+Return ONLY the JSON object. Do not include markdown formatting, code fences, or
+any explanation before or after it.
+
+Contract:
+{contract_text}
+"""
