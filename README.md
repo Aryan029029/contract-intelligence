@@ -1,4 +1,9 @@
-# Legal Contract Intelligence
+# Contract Intelligence
+
+![Python](https://img.shields.io/badge/Python-3.13-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-App-red)
+![FAISS](https://img.shields.io/badge/FAISS-Vector%20Search-green)
+![Groq](https://img.shields.io/badge/Groq-Llama%203.3%2070B-orange)
 
 An AI-powered legal contract analysis system that combines Large Language Models (LLMs) with semantic search to help users quickly understand legal agreements.
 
@@ -25,6 +30,14 @@ The project was developed as part of the **Uptitude AI Internship Take-Home Assi
 - Semantic clause search using vector similarity
 - Interactive Streamlit web interface
 - Export structured analysis as JSON
+
+## Demo Features
+
+- Upload a legal contract in PDF format
+- Generate an AI-powered summary
+- Extract key legal clauses
+- Search semantically similar clauses
+- Export results as JSON
 
 ---
 
@@ -223,19 +236,16 @@ Download JSON Results
 
 ## Screenshots
 
-### Home Page
-
-> ![Home](assets/home.png)
 
 ### Contract Analysis
 
-> ![Analysis](assets/analysis.png)
+![Analysis](assets/analysis.png)
 
+---
 
 ### Semantic Search
 
-> ![Semantic Search](assets/semantic-search.png)
-
+![Semantic Search](assets/semantic-search.png)
 ---
 
 ## Dataset
