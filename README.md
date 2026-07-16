@@ -15,7 +15,7 @@ The application generates concise contract summaries, extracts important legal c
 
 Legal contracts are often lengthy and time consuming to review manually. This project automates the process by using an LLM to summarize contracts and identify key legal clauses while also allowing semantic retrieval of similar clauses from a collection of contracts.
 
-The project was developed as part of the **Uptitude AI Internship Take-Home Assignment**.
+This project demonstrates the application of Large Language Models (LLMs) and semantic search for automated legal contract analysis.
 
 ---
 
@@ -124,7 +124,7 @@ The project was developed as part of the **Uptitude AI Internship Take-Home Assi
 ### Clone the repository
 
 ```bash
-git clone https://github.com/Aryan029029/cuad-pipeline.git
+git clone https://github.com/Aryan029029/contract-intelligence.git
 ```
 
 ### Navigate to the project
@@ -256,4 +256,6 @@ The project uses contracts from the **CUAD (Contract Understanding Atticus Datas
 
 ## License
 
-This project was developed for the **Uptitude AI Internship Take-Home Assignment** and is intended for educational purposes.
+## License
+
+This project is licensed under the MIT License.
